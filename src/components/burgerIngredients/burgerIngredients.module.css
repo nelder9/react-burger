@@ -1,48 +1,32 @@
 .main {
-    margin-top: 60px;
-}
-
-.blockElem {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    align-items: flex-end;
-    margin-right: 8px;
-}
-
-.scrollBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
     overflow-y: auto;
-    height: 450px;
-    align-items: flex-end;
+    height: 686px;
+    gap: 10px;
 }
 
-.scrollBlock::-webkit-scrollbar {
+.main::-webkit-scrollbar {
     width: 12px;
 }
   
-.scrollBlock::-webkit-scrollbar-thumb {
+.main::-webkit-scrollbar-thumb {
     background: #8585ad;
     border: 3px solid #2f2f37;
     border-radius: 6px;
 }
 
-.order {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-margin-top: 40px;
-}
-
-.price {
-    display: flex;
-    align-items: center;
-    margin-right: 41px;
-}
-
 .item {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    width: 272px;
+    margin: 8px;
+    text-align: center;
+    position: relative;
 }
+
+.tab {
+    margin-top: 40px;
+}
+

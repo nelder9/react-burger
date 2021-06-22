@@ -1,0 +1,8 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 272px;
+    text-align: center;
+    position: relative;
+}

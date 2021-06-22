@@ -3,32 +3,31 @@ import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-dev
 import styles from './appHeader.module.css';
 
 function AppHeader() {
-  return (
-        <header className={ styles.header }>
-            <div className={ styles.item }>
+    return (
+        <header className={styles.header}>
+            <div style={{ display: 'flex' }}>
                 <BurgerIcon type="primary" />
                 <p className="text text_type_main-default ml-2">
-                Конструктор
+                    Конструктор
                 </p>
             </div>
-
-            <div className={ styles.item }>
+            <div style={{ display: 'flex', flexGrow: 2, justifyContent: 'center' }}>
                 <ListIcon type="secondary" />
-                <p className="text text_type_main-default ml-2">
-                Лента заказов
+                <p className="text text_type_main-default ml-2 text_color_inactive">
+                    Лента заказов
                 </p>
             </div>
-            <div className={ styles.item }>
+            <div style={{ display: 'flex', flexGrow: 3 }}>
                 <Logo />
             </div>
-            <div className={ styles.item }>
+            <div style={{ display: 'flex' }}>
                 <ProfileIcon type="secondary" />
-                <p className="text text_type_main-default ml-2">
-                Личный кабинет
+                <p className="text text_type_main-default ml-2 text_color_inactive">
+                    Личный кабинет
                 </p>
             </div>
-        </header>   
-  );
+        </header>
+    );
 }
 
 export default AppHeader;

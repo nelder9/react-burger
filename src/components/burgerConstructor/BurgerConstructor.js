@@ -1,85 +1,48 @@
 import React from 'react';
-import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './burgerConstructor.module.css';
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import styles from './burgerConstructor.module.css';
+import IngredientsList from '../Ingredients-list/IngredientsList'
 import { data } from '../../utils/data'
 
-console.log(data)
+const allIngr = data.filter((item) => item.type !== 'bun')
 
+const img = 'https://code.s3.yandex.net/react/code/bun-02.png'
 function BurgerConstructor() {
-    const [current, setCurrent] = React.useState('one')
-  return (
-      <>
-        <p className="text text_type_main-large">
-        Соберите бургер
-        </p>
-        <div style={{ display: 'flex' }}>
-            <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-            Булки
-            </Tab>
-            <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-            Соусы
-            </Tab>
-            <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-            Начинки
-            </Tab>
-        </div>
-        
+    return (
         <div className={styles.main}>
-            <p className={"text text_type_main-medium full-width"}>
-            Булки
-            </p>
-            {data.map((it) => {
-                if (it.type === 'bun') {
-                    return (
-                        <div className={styles.item} key={it._id}>
-                            <Counter count={1} size="default" />
-                            <img src={it.image} alt={it.name} />
-                            <p className="text text_type_digits-default m-1"><CurrencyIcon type="primary" /> {it.price}</p>
-                            <p className="text text_type_main-default mb-5">
-                            {it.name}
-                            </p>
-                        </div>        
-                    )
-                }    
-            })}
-            <p className={"text text_type_main-medium full-width"}>
-            Соусы
-            </p>
-            {data.map((it) => {
-                if (it.type === 'sauce') {
-                    return (
-                        <div className={styles.item} key={it._id}>
-                            <Counter count={1} size="default" />
-                            <img src={it.image} alt={it.name} />
-                            <p className="text text_type_digits-default m-1"><CurrencyIcon type="primary" /> {it.price}</p>
-                            <p className="text text_type_main-default mb-5">
-                            {it.name}
-                            </p>
-                        </div>        
-                    )
-                }    
-            })}
-            <p className={"text text_type_main-medium full-width"}>
-            Начинка
-            </p>
-            {data.map((it) => {
-                if (it.type === 'main') {
-                    return (
-                        <div className={styles.item} key={it._id}>
-                            <Counter count={1} size="default" />
-                            <img src={it.image} alt={it.name} />
-                            <p className="text text_type_digits-default m-1"><CurrencyIcon type="primary" /> {it.price}</p>
-                            <p className="text text_type_main-default mb-5">
-                            {it.name}
-                            </p>
-                        </div>        
-                    )
-                }    
-            })}
+            <div className={styles.blockElem}>
+                <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text="Краторная булка N-200i (верх)"
+                    price={200}
+                    thumbnail={img}
+                />
+            </div>
+            <ul className={styles.scrollBlock}>
+                {allIngr.map(el => <IngredientsList ingr={el} key={el._id}/>)}
+            </ul>
+            <div className={styles.blockElem}>
+                <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text="Краторная булка N-200i (низ)"
+                    price={200}
+                    thumbnail={img}
+                />
+            </div>
+            <div className={styles.order}>
+                <div className={styles.price}>
+                    <p className="text text_type_digits-medium mr-2">129</p>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <Button type="primary" size="large">
+                    Оформить заказ
+                </Button>
+            </div>
         </div>
-      </>   
-  );
+    );
 }
 
 export default BurgerConstructor;

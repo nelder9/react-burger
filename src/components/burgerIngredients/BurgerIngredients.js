@@ -1,111 +1,55 @@
 import React from 'react';
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './burgerIngredients.module.css';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import Supplies from '../Supplies/Supplies'
+import styles from './burgerIngredients.module.css';
 import { data } from '../../utils/data'
 
-console.log(data)
-const img = 'https://code.s3.yandex.net/react/code/bun-02.png'
-function BurgerConstructor() {
-  return (
-    <div className={styles.main}>
-        <div className={styles.blockElem}>
-            <ConstructorElement
-                type="top"
-                isLocked={true}
-                text="Краторная булка N-200i (верх)"
-                price={200}
-                thumbnail={img}
-            />
-        </div>   
-            <div className={styles.scrollBlock}>
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
-            
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>
-                <div className={styles.item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                text="Краторная булка N-200i (верх)"
-                price={50}
-                thumbnail={img}
-                />      
-                </div>  
+function BurgerIngredients() {
+    const [current, setCurrent] = React.useState('bun')
+
+    const buns = data.filter((item) => item.type === 'bun')
+    const mains = data.filter((item) => item.type === 'main')
+    const sauces = data.filter((item) => item.type === 'sauce')
+
+    const setTab = (tab) => {
+        setCurrent(tab);
+        const element = document.getElementById(tab);
+        if (element) element.scrollIntoView({ behavior: "smooth" });
+    };
+
+    return (
+        <>
+            <p className="text text_type_main-large mt-10 mb-5">
+                Соберите бургер
+            </p>
+            <div style={{ display: 'flex' }} id={'tab'}>
+                <Tab value="buns" active={current === 'buns'} onClick={setTab.bind(null, 'buns')}>
+                    Булки
+                </Tab>
+                <Tab value="sauces" active={current === 'sauces'} onClick={setTab.bind(null, 'sauces')}>
+                    Соусы
+                </Tab>
+                <Tab value="mains" active={current === 'mains'} onClick={setTab.bind(null, 'mains')}>
+                    Начинки
+                </Tab>
             </div>
-            <div className={styles.blockElem}>
-            <ConstructorElement
-                type="bottom"
-                isLocked={true}
-                text="Краторная булка N-200i (низ)"
-                price={200}
-                thumbnail={img}
-            />
+            <div className={styles.main}>
+                <p className={"text text_type_main-medium full-width mt-10"} id={'buns'}>
+                    Булки
+                </p>
+                {buns.map((it) => <Supplies burger={it} key={it._id}/>)}
+                <p className={"text text_type_main-medium full-width mt-10"} id={'sauces'}>
+                    Соусы
+                </p>
+                {sauces.map((it) => <Supplies burger={it} key={it._id}/>)}
+                <p className={"text text_type_main-medium full-width mt-10"} id={'mains'}>
+                    Начинка
+                </p>
+                {mains.map((it) => <Supplies burger={it} key={it._id}/>)}
             </div>
-        <div className={styles.order}>
-            <div className={styles.price}>
-                <p className="text text_type_digits-medium mr-2">129</p>
-                <CurrencyIcon type="primary" />
-            </div>
-            
-            <Button type="primary" size="large">
-            Оформить заказ
-            </Button>
-        </div>
-    </div>  
-  );
+        </>
+    );
 }
 
-export default BurgerConstructor;
+export default BurgerIngredients;
