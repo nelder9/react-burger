@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './orderDetails.module.css';
-import ModalOverlay from '../modalOverlay/modalOverlay';
+import ModalOverlay from '../modal-overlay/modalOverlay';
 import img from '../../images/done.svg';
 
 

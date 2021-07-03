@@ -4,7 +4,7 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 
 import styles from './burgerConstructor.module.css';
 import Ingredients from '../ingredients/ingredients';
-import OrderDetails from '../orderDetails/orderDetails';
+import OrderDetails from '../order-details/orderDetails';
 
 const img = 'https://code.s3.yandex.net/react/code/bun-02.png'
 

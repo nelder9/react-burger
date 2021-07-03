@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './supplies.module.css';
 
-import IngredientDetails from '../ingredientDetails/ingredientDetails';
+import IngredientDetails from '../ingredient-details/ingredientDetails';
 
 export default function Supplies({ ingr }) {
     const [isOpen, setIsOpen] = React.useState(false)

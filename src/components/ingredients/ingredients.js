@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './Ingredients.module.css';
 
-import IngredientDetails from '../ingredientDetails/ingredientDetails';
+import IngredientDetails from '../ingredient-details/ingredientDetails';
 
 export default function Ingredients({ ingr }) {
     const [isOpen, setIsOpen] = React.useState(false)
