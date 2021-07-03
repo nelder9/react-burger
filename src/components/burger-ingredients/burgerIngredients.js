@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import Supplies from '../SSupplies/SSupplies'
+import Supplies from '../supplies/supplies'
 import styles from './burgerIngredients.module.css';
 
 export default function BurgerIngredients({ items }) {
