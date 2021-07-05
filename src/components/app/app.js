@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AppHeader from '../app-header/appHeader';
-import BurgerConstructor from '../burger-constructor/burgerConstructor';
-import BurgerIngredients from '../burger-ingredients/burgerIngredients';
+import AppHeader from '../app-header/app-header';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
 const URL = 'https://norma.nomoreparties.space/api/ingredients'
@@ -20,7 +20,7 @@ function App() {
         setData(data)
         setIsLoading(false)
       } catch (e) {
-        throw e;
+        console.log(e)
       }
     };
     getData();

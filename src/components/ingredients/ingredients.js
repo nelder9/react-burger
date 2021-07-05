@@ -2,17 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './Ingredients.module.css';
+import styles from './ingredients.module.css';
 
-import IngredientDetails from '../ingredient-details/ingredientDetails';
 
-export default function Ingredients({ ingr }) {
-    const [isOpen, setIsOpen] = React.useState(false)
+export default function Ingredients({ ingr, onOpen }) {
 
     return (
-        <>
             <li className={styles.item} id={ingr._id}
-                onClick={() => setIsOpen(true)}>
+                onClick={() => onOpen(ingr)}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                     text={ingr.name}
@@ -20,11 +17,10 @@ export default function Ingredients({ ingr }) {
                     thumbnail={ingr.image_mobile}
                 />
             </li>
-            <IngredientDetails open={isOpen} onClose={() => setIsOpen(false)} ingr={ingr} />
-        </>
     );
 }
 
 Ingredients.propTypes = {
-    ingr: PropTypes.object.isRequired
+    ingr: PropTypes.object.isRequired,
+    onOpen: PropTypes.func.isRequired
 }
