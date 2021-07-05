@@ -24,7 +24,7 @@ export default function Modal({ children, onClose, title, open }) {
     return ReactDom.createPortal(
         <>
             <div className={styles.modal_container}>
-                {title && <header className={styles.modal_header}><p className="text text_type_main-large">Детали ингредиента</p><CloseIcon type="primary" onClick={onClose} /></header>}
+                {title && <header className={styles.modal_header}><p className="text text_type_main-large">{title}</p><CloseIcon type="primary" onClick={onClose} /></header>}
                 {children}
             </div>
             <ModalOverlay onClose={onClose} />
@@ -36,5 +36,5 @@ export default function Modal({ children, onClose, title, open }) {
 Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    title: PropTypes.bool.isRequired
+    title: PropTypes.string.isRequired
 }
