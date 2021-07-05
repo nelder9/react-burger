@@ -53,10 +53,10 @@ export default function BurgerConstructor({ items }) {
                     </Button>
                 </div>
             </div>
-            <Modal title={false} open={isOpenOrderDetails} onClose={() => setIsOpenOrderDetails(false)} >
+            <Modal title='' open={isOpenOrderDetails} onClose={() => setIsOpenOrderDetails(false)} >
                 <OrderDetails onClose={() => setIsOpenOrderDetails(false)} />
             </Modal>
-            <Modal title={true} open={isOpenIngredientDetails} onClose={() => setIsIngredientDetails(false)} >
+            <Modal title={'Детали ингредиента'} open={isOpenIngredientDetails} onClose={() => setIsIngredientDetails(false)} >
                 <IngredientDetails open={isOpenIngredientDetails} onClose={() => setIsIngredientDetails(false)} ingr={currentIngr} />
             </Modal>
         </>
