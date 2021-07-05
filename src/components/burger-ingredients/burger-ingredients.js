@@ -58,7 +58,7 @@ export default function BurgerIngredients({ items }) {
                 </p>
                 {mains.map((it) => <Supplies ingr={it} key={it._id} onOpen={onOpen} />)}
             </div>
-            <Modal title={true} open={isOpen} onClose={() => setIsOpen(false)} >
+            <Modal title={'Детали ингредиента'} open={isOpen} onClose={() => setIsOpen(false)} >
                 <IngredientDetails open={isOpen} onClose={() => setIsOpen(false)} ingr={currentIngr} />
             </Modal>
         </>
