@@ -1,0 +1,27 @@
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    width: 480px;
+    height: 240px;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    width: 640px;
+}
+
+.modalEnergy {
+    display: flex;
+    justify-content: space-between;
+    width: 520px;
+}
+
+.modalEnergyItem {
+    flex-basis: 0;
+    flex-grow: 1;
+}
