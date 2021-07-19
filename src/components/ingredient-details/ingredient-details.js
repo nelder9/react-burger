@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import styles from './ingredientDetails.module.css';
 
-export default function IngredientDetails({ ingr }) {
+export default function IngredientDetails() {
+  const ingr = useSelector(state => state.modalItem);
+
   return (
     <>
       <img className={styles.img} src={ingr.image_large} alt={ingr.name}></img>

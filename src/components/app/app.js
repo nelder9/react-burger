@@ -1,4 +1,6 @@
 import React from 'react';
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -7,7 +9,7 @@ import styles from './app.module.css';
 
 const URL = 'https://norma.nomoreparties.space/api/ingredients'
 
-function App() {
+export default function App() {
   const [data, setData] = React.useState([]);
 
   const [isLoading, setIsLoading] = React.useState(true);
@@ -27,20 +29,18 @@ function App() {
   }, []);
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <AppHeader />
       <div className={styles.container}>
         <main className={styles.main}>
           <div className={styles.block}>
-            {!isLoading && <BurgerIngredients items={data} />}
+            <BurgerIngredients />
           </div>
           <div className={styles.block}>
-            {!isLoading && <BurgerConstructor items={data} />}
+            <BurgerConstructor />
           </div>
         </main>
       </div>
-    </>
+      </DndProvider>
   );
 }
-
-export default App;

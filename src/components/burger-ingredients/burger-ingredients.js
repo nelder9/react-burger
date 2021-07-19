@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import Supplies from '../supplies/supplies'
 import styles from './burgerIngredients.module.css';
 import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
-export default function BurgerIngredients({ items }) {
-    const [isOpen, setIsOpen] = React.useState(false)
+import { getItems } from '../../services/actions/items';
+
+export default function BurgerIngredients() {
+    const dispatch = useDispatch();
+
+    const items = useSelector(state => state.items);
 
     const [current, setCurrent] = React.useState('bun')
-    const [currentIngr, setCurrentIngr] = React.useState(null)
 
-    const buns = items.data.filter((item) => item.type === 'bun')
-    const mains = items.data.filter((item) => item.type === 'main')
-    const sauces = items.data.filter((item) => item.type === 'sauce')
+    const buns = items.filter((item) => item.type === 'bun')
+    const mains = items.filter((item) => item.type === 'main')
+    const sauces = items.filter((item) => item.type === 'sauce')
 
     const setTab = (tab) => {
         setCurrent(tab);
@@ -23,10 +27,13 @@ export default function BurgerIngredients({ items }) {
         if (element) element.scrollIntoView({ behavior: "smooth" });
     };
 
-    const onOpen = (ingr) => {
-        setIsOpen(true)
-        setCurrentIngr(ingr)
-    }
+
+    useEffect(
+        () => {
+          dispatch(getItems());
+        },
+        [dispatch]
+      );
 
     return (
         <>
@@ -48,23 +55,18 @@ export default function BurgerIngredients({ items }) {
                 <p className={"text text_type_main-medium full-width mt-10"} id={'buns'}>
                     Булки
                 </p>
-                {buns.map((it) => <Supplies ingr={it} key={it._id} onOpen={onOpen} />)}
+                {buns.map((it) => <Supplies ingr={it} key={it._id} />)}
                 <p className={"text text_type_main-medium full-width mt-10"} id={'sauces'}>
                     Соусы
                 </p>
-                {sauces.map((it) => <Supplies ingr={it} key={it._id} onOpen={onOpen} />)}
+                {sauces.map((it) => <Supplies ingr={it} key={it._id} />)}
                 <p className={"text text_type_main-medium full-width mt-10"} id={'mains'}>
                     Начинка
                 </p>
-                {mains.map((it) => <Supplies ingr={it} key={it._id} onOpen={onOpen} />)}
+                {mains.map((it) => <Supplies ingr={it} key={it._id} />)}
             </div>
-            <Modal title={'Детали ингредиента'} open={isOpen} onClose={() => setIsOpen(false)} >
-                <IngredientDetails open={isOpen} onClose={() => setIsOpen(false)} ingr={currentIngr} />
+            <Modal title={'Детали ингредиента'} >
             </Modal>
         </>
     );
-}
-
-BurgerIngredients.propTypes = {
-    items: PropTypes.object.isRequired
 }
