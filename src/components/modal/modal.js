@@ -10,7 +10,7 @@ import { CLOSE_MODAL } from '../../services/actions/index';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 
-export default function Modal({ children, title }) {
+export default function Modal({ title }) {
     const dispatch = useDispatch();
     const open = useSelector(state => state.isModalOpen);
     const onClose = () => {
@@ -48,7 +48,5 @@ export default function Modal({ children, title }) {
 }
 
 Modal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired
 }

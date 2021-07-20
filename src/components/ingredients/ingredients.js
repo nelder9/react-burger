@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { DELETE_ITEM } from '../../services/actions/index';
 
@@ -10,18 +10,9 @@ import styles from './ingredients.module.css';
 
 export default function Ingredients({ ingr, findCard, moveCard }) {
 
-    const id = ingr._id;
-    //const unId = ingr.uid;
-
-
-
-// Где-то Здесь ошибка....
-// есть оригиналный айдишник это ingr._id и есть сгенерированный для каждого это ingr.uid
-
+    const id = ingr.uid;
 
     const originalIndex = findCard(id).index;
-
-   // console.log(originalIndex, 56)
 
     const dispatch = useDispatch();
 
@@ -56,7 +47,8 @@ export default function Ingredients({ ingr, findCard, moveCard }) {
     const onDelete = () => {
         dispatch({
             type: DELETE_ITEM,
-            uid: ingr.uid
+            uid: ingr.uid,
+            idItem: ingr._id
         });
     };
 
@@ -77,5 +69,6 @@ export default function Ingredients({ ingr, findCard, moveCard }) {
 
 Ingredients.propTypes = {
     ingr: PropTypes.object.isRequired,
-    onOpen: PropTypes.func.isRequired
+    moveCard: PropTypes.func.isRequired,
+    findCard: PropTypes.func.isRequired
 }

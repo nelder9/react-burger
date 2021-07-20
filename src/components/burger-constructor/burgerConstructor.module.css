@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 600px;
     overflow-y: auto;
     max-height: 440px;
     align-items: flex-end;
@@ -22,7 +23,7 @@
 .scrollBlock::-webkit-scrollbar {
     width: 12px;
 }
-  
+
 .scrollBlock::-webkit-scrollbar-thumb {
     background: #8585ad;
     border: 3px solid #2f2f37;
@@ -30,10 +31,10 @@
 }
 
 .order {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 40px;
 }
 
 .price {
@@ -45,4 +46,9 @@ margin-top: 40px;
 .item {
     display: flex;
     align-items: center;
+}
+
+.block {
+    width: 600px;
+    height: 696px;
 }

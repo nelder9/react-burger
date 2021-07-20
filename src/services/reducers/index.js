@@ -1,4 +1,6 @@
-import { GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, DELETE_ITEM, OPEN_MODAL, CLOSE_MODAL, ADD_ITEM, SORT_ITEM } from '../actions';
+import { nanoid } from 'nanoid';
+
+import { GET_ITEMS_REQUEST, GET_ITEMS_SUCCESS, GET_ITEMS_FAILED, DELETE_ITEM, OPEN_MODAL, CLOSE_MODAL, ADD_ITEM, SORT_ITEM, INCREASE_COUNTER } from '../actions';
 
 const initialState = {
   items: [],
@@ -7,7 +9,8 @@ const initialState = {
   constructorItems: [],
   modalItem: null,
   isModalOpen: false,
-  modal: null
+  modal: null,
+  orderNumber: null
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -25,22 +28,31 @@ export const rootReducer = (state = initialState, action) => {
       return { ...state, itemsFailed: true, itemsRequest: false };
     }
     case DELETE_ITEM: {
-      
-      return { ...state, constructorItems: [...state.constructorItems.filter(item => item.uid !== action.uid)] };
+      const indexItem = state.items.findIndex(item => item._id === action.idItem);
+      if (state.items[indexItem].count > 0) {
+        state.items[indexItem].count -= 1
+      } else {
+        delete state.items[indexItem].count;
+      }
+      return { ...state, items: [...state.items], constructorItems: [...state.constructorItems.filter(item => item.uid !== action.uid)] };
     }
     case OPEN_MODAL: {
-      return { ...state, modalItem: action.item, isModalOpen: true, modal: action.modal };
+      return { ...state, modalItem: action.item, isModalOpen: true, modal: action.modal, orderNumber: action.response };
     }
     case CLOSE_MODAL: {
       return { ...state, modalItem: null, isModalOpen: false, modal: null };
     }
-
     case ADD_ITEM: {
-
       const ingredient = state.items.find(item => item._id === action.idItem);
+      if (ingredient.type === 'bun') {
+        const actualBunIndex = state.constructorItems.findIndex((item) => item.type === "bun");
+        if (actualBunIndex > -1) {
+          state.constructorItems.splice(actualBunIndex, 1, ingredient)
+          return state;
+        }
+      }
       const newIngredient = { ...ingredient };
-      newIngredient.uid = Math.random();
-      
+      newIngredient.uid = nanoid();
       return {
         ...state,
         constructorItems: [...state.constructorItems, newIngredient]
@@ -52,8 +64,19 @@ export const rootReducer = (state = initialState, action) => {
         constructorItems: [...action.item]
       };
     }
-
-
+    case INCREASE_COUNTER: {
+      const ingredient = state.items.find(item => item._id === action.idItem);
+      if (ingredient.type === 'bun') {
+        return state;
+      }
+      const indexItem = state.items.findIndex(item => item._id === action.idItem);
+      if (state.items[indexItem].count) {
+        state.items[indexItem].count += 1
+      } else {
+        state.items[indexItem].count = 1;
+      }
+      return { ...state, items: [...state.items] };
+    }
     default: {
       return state;
     }

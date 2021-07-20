@@ -23,7 +23,6 @@ export function getItems() {
         type: GET_ITEMS_REQUEST
       });
       getData().then(res => {
-          console.log(res, res.success, 7)
         if (res && res.success) {
           dispatch({
             type: GET_ITEMS_SUCCESS,
