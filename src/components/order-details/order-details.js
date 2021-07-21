@@ -5,14 +5,17 @@ import styles from './orderDetails.module.css';
 import img from '../../images/done.svg';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CLOSE_MODAL } from '../../services/actions/index';
+import { CLOSE_MODAL, RESTORE_CONSTRUCTOR } from '../../services/actions/index';
 
 export default function OrderDetails() {
     const dispatch = useDispatch();
-    const orderNumber = useSelector(state => state.orderNumber)
+    const { orderNumber } = useSelector(state => state.burger)
     const onClose = () => {
         dispatch({
             type: CLOSE_MODAL
+        });
+        dispatch({
+            type: RESTORE_CONSTRUCTOR
         });
     };
     return (

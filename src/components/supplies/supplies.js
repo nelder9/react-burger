@@ -28,7 +28,6 @@ export default function Supplies({ ingr }) {
   });
 
   return (
-    <>
       <li className={styles.item} ref={ref} onClick={onOpen} style={{ opacity }}>
         {ingr.count ? <Counter count={ingr.count} size="default" /> : ''}
         <img src={ingr.image} alt={ingr.name} />
@@ -37,7 +36,6 @@ export default function Supplies({ ingr }) {
           {ingr.name}
         </p>
       </li>
-    </>
   );
 }
 

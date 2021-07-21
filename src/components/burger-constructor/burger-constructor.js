@@ -5,13 +5,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './burgerConstructor.module.css';
 import Ingredients from '../ingredients/ingredients';
 import { useDrop } from 'react-dnd';
-import { OPEN_MODAL, ADD_ITEM, SORT_ITEM, INCREASE_COUNTER } from '../../services/actions/index';
+import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal';
+import { OPEN_MODAL, ADD_ITEM, SORT_ITEM, INCREASE_COUNTER, GET_ORDER } from '../../services/actions/index';
 
 const URL = "https://norma.nomoreparties.space/api/orders";
 
 export default function BurgerConstructor() {
     const dispatch = useDispatch();
-    const constructorItems = useSelector(state => state.constructorItems);
+    const { constructorItems } = useSelector(state => state.burger);
+    const { modal } = useSelector(state => state.burger);
     const mainBun = constructorItems.find((item) => item.type === "bun");
 
     const constructorItemsNotBun = constructorItems.filter(el => el.type !== 'bun');
@@ -25,7 +28,6 @@ export default function BurgerConstructor() {
             if (!mainBun) {
                 return null;
             }
-
             const body = JSON.stringify({
                 ingredients: ingredientIDs,
             });
@@ -36,13 +38,10 @@ export default function BurgerConstructor() {
                 },
                 body,
             });
-
             if (!res.ok) {
                 throw new Error("ERROR");
             }
-
             const response = await res.json();
-
             dispatch({
                 type: OPEN_MODAL,
                 item: null,
@@ -50,10 +49,13 @@ export default function BurgerConstructor() {
                 response: response.order
             });
 
-        } catch (err) {
-            console.error("ERROR", err);
+            dispatch({
+                type: GET_ORDER,
+                response: response.order
+            });
+        } catch (e) {
+            console.error(e, 'ошибка');
         }
-
     };
 
     const moveItem = (item) => {
@@ -78,7 +80,6 @@ export default function BurgerConstructor() {
         },
     });
 
-    
 
     const [, dropTarget] = useDrop({
         accept: "card",
@@ -154,6 +155,7 @@ export default function BurgerConstructor() {
                     </Button>
                 </div>
             </div>
+            {modal === 'order' ? <Modal ><OrderDetails /></Modal> : ''}
         </div>
     );
 }

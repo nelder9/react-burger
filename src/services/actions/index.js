@@ -7,3 +7,5 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const ADD_ITEM = 'ADD_ITEM';
 export const SORT_ITEM = 'SORT_ITEM';
 export const INCREASE_COUNTER = 'INCREASE_COUNTER';
+export const GET_ORDER = 'GET_ORDER';
+export const RESTORE_CONSTRUCTOR = 'RESTORE_CONSTRUCTOR';

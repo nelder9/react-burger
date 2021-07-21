@@ -5,12 +5,16 @@ import Supplies from '../supplies/supplies'
 import styles from './burgerIngredients.module.css';
 import Modal from '../modal/modal';
 import { getItems } from '../../services/actions/items';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 export default function BurgerIngredients() {
     const dispatch = useDispatch();
+    const { modal } = useSelector(state => state.burger);
+    useEffect(() => {
+        dispatch(getItems());
+    }, [dispatch]);
 
-    const items = useSelector(state => state.items);
-
+    const { items } = useSelector(state => state.burger);
     const [currentTab, setCurrentTab] = useState('buns');
     const buns = items.filter((item) => item.type === 'bun')
     const mains = items.filter((item) => item.type === 'main')
@@ -21,13 +25,6 @@ export default function BurgerIngredients() {
         const element = document.getElementById(tab);
         if (element) element.scrollIntoView({ behavior: "smooth" });
     };
-
-    useEffect(
-        () => {
-            dispatch(getItems());
-        },
-        [dispatch]
-    );
 
     const scrollContainerRef = useRef(null);
     const bunRef = useRef(null);
@@ -82,8 +79,8 @@ export default function BurgerIngredients() {
                 </p>
                 {mains.map((it) => <Supplies ingr={it} key={it._id} />)}
             </div>
-            <Modal title={'Детали ингредиента'} >
-            </Modal>
+            {modal === 'card' ? <Modal title={'Детали ингредиента'}><IngredientDetails /></Modal> : '' } 
+            
         </div>
     );
 }

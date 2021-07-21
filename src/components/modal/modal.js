@@ -6,17 +6,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
-import { CLOSE_MODAL } from '../../services/actions/index';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
+import { CLOSE_MODAL, RESTORE_CONSTRUCTOR } from '../../services/actions/index';
 
-export default function Modal({ title }) {
+export default function Modal ({ children, title }) {
     const dispatch = useDispatch();
-    const open = useSelector(state => state.isModalOpen);
+    const { isModalOpen } = useSelector(state => state.burger);
+    const { modal } = useSelector(state => state.burger);
     const onClose = () => {
         dispatch({
           type: CLOSE_MODAL
         });
+        if (modal === 'order') {
+            dispatch({
+                type: RESTORE_CONSTRUCTOR
+              });
+        }
       };
 
     const keyDownHandler = (e) => {
@@ -30,8 +34,8 @@ export default function Modal({ title }) {
             document.removeEventListener('keydown', keyDownHandler)
         }
     })
-    const content = useSelector(state => state.modal); 
-    if (!open) return null;
+
+    if (!isModalOpen) return null;
 
     
 
@@ -39,7 +43,7 @@ export default function Modal({ title }) {
         <>
             <div className={styles.modal_container}>
                 {title && <header className={styles.modal_header}><p className="text text_type_main-large">{title}</p><CloseIcon type="primary" onClick={onClose} /></header>}
-                {content === 'card' ? <IngredientDetails /> : <OrderDetails />}
+                {children}
             </div>
             <ModalOverlay onClose={onClose} />
         </>
@@ -48,5 +52,5 @@ export default function Modal({ title }) {
 }
 
 Modal.propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.string
 }
