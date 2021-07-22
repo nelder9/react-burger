@@ -7,13 +7,9 @@ import {
 const URL = 'https://norma.nomoreparties.space/api/ingredients'
 
 const getData = async () => {
-  try {
-    const res = await fetch(URL);
-    const data = await res.json();
-    return data;
-  } catch (e) {
-    console.log(e, 'ошибка')
-  }
+  const res = await fetch(URL);
+  const data = await res.json();
+  return data;
 };
 
 export function getItems() {
@@ -21,19 +17,22 @@ export function getItems() {
     dispatch({
       type: GET_ITEMS_REQUEST
     });
-
     getData().then(res => {
-      try {
+      if (res && res.success) {
         dispatch({
           type: GET_ITEMS_SUCCESS,
           items: res.data
         });
-      } catch (e) {
-        console.log(e, 'ошибка')
+      } else {
         dispatch({
           type: GET_ITEMS_FAILED
         });
       }
+    }).catch((e) => {
+      console.log(e, 'ошибка');
+      dispatch({
+        type: GET_ITEMS_FAILED,
+      });
     });
   };
 }
