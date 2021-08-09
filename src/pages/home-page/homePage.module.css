@@ -1,0 +1,14 @@
+.container {
+    width: 1244px;
+    margin: 0 auto;
+}
+
+.block {
+    width: 600px;
+    height: 696px;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+}
