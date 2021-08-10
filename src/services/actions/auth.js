@@ -1,7 +1,8 @@
 import { authService } from "../auth";
+import { setCookie } from "../utils";
 
-export const SET_TOKEN_INVALID = "SET_TOKEN_INVALID";
 export const SET_EMAIL_RESET = "SET_EMAIL_RESET";
+export const SET_AUTHORIZATION = "SET_AUTHORIZATION";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -27,13 +28,7 @@ export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILURE = "RESET_PASSWORD_FAILURE";
 
-const setTokenInvalid = () => {
-    return (dispatch) => {
-        dispatch({
-            type: SET_TOKEN_INVALID,
-        });
-    };
-};
+
 
 const setEmailReset = (emailReset) => {
     return (dispatch) => {
@@ -65,18 +60,19 @@ const logout = (token) => {
     const request = () => ({ type: LOGOUT_REQUEST });
     const success = () => ({ type: LOGOUT_SUCCESS });
     const failure = (error) => ({ type: LOGOUT_FAILURE, error });
-
+  
     return async (dispatch) => {
-        dispatch(request());
-
-        try {
-            await authService.logout(token);
-            dispatch(success());
-        } catch (err) {
-            dispatch(failure(err));
-        }
+        
+      dispatch(request());
+  
+      try {
+        await authService.logout(token);
+        dispatch(success());
+      } catch (err) {
+        dispatch(failure(err));
+      }
     };
-};
+  };
 
 const updateToken = (token) => {
     const request = () => ({ type: UPDATE_TOKEN_REQUEST });
@@ -113,7 +109,6 @@ const register = (form) => {
 };
 
 const forgotPassword = (email) => {
-    console.log(email, 8)
     const request = () => ({ type: FORGOT_PASSWORD_REQUEST });
     const success = (data) => ({ type: FORGOT_PASSWORD_SUCCESS, data });
     const failure = (error) => ({ type: FORGOT_PASSWORD_FAILURE, error });
@@ -122,7 +117,6 @@ const forgotPassword = (email) => {
         dispatch(request(email));
 
         try {
-            console.log(7)
             const data = await authService.forgotPassword(email);
 
             dispatch(success(data));
@@ -150,8 +144,20 @@ const resetPassword = (form) => {
     };
 };
 
+const setAuthorization = ({ accessToken, refreshToken }) => {
+    return (dispatch) => {
+      setCookie("token", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+  
+      dispatch({
+        type: SET_AUTHORIZATION,
+        accessToken,
+        refreshToken,
+      });
+    };
+  };
+
 export const authActions = {
-    setTokenInvalid,
     setEmailReset,
     login,
     logout,
@@ -159,4 +165,5 @@ export const authActions = {
     register,
     forgotPassword,
     resetPassword,
+    setAuthorization
 };

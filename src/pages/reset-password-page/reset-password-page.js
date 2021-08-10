@@ -25,7 +25,9 @@ export default function ResetPasswordPage() {
     const dispatch = useDispatch();
     const [values, setValues] = useState(initialValues);
     const [inputErrors, setInputErrors] = useState(initialInputErrors);
-    const { validToken, emailReset, error } = useSelector((store) => store.auth);
+    const { isAuthorized, emailReset, error } = useSelector(
+        (store) => store.auth
+      );
 
     const onChange = ({ target }) => {
         const { name, value } = target;
@@ -42,27 +44,26 @@ export default function ResetPasswordPage() {
     };
 
     const handleSubmit = () => {
-        console.log(values, 'это уходит')
         if (!validateFields(fields, values, setInputErrors)) {
-            return;
+          return;
         }
-
+    
         dispatch(authActions.resetPassword(values));
         dispatch(authActions.setEmailReset(false));
-    };
+      };
 
 
 
     const flexRow = `${styles.flexRow} text text_type_main-default text_color_inactive`;
     const errorDiv = `${styles.error} mt-6 mb-8`;
 
-    if (validToken) {
+    if (isAuthorized) {
         return <Redirect to={{ pathname: "/" }} />;
-    }
-
-    if (!emailReset) {
-        return <Redirect to={{ pathname: "/forgot-password" }} />;
-    }
+      }
+    
+      if (!emailReset) {
+        return <Redirect to={{ pathname: "/login" }} />;
+      }
 
     return (
         <div className={styles.resetPassword}>

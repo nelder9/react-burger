@@ -18,8 +18,14 @@ export default function LoginPage() {
     const dispatch = useDispatch();
     const [values, setValues] = useState(initialValues);
     const { location } = useHistory();
-    const { validToken, error } = useSelector((store) => store.auth);
+    const { isAuthorized, error } = useSelector((store) => store.auth);
 
+    if (isAuthorized) {
+        console.log(isAuthorized, 7)
+        return (
+        <Redirect to={{ pathname: location.state?.from?.pathname || "/" }} />
+        );
+    }
 
 
     const onChange = ({ target }) => {
@@ -41,12 +47,8 @@ export default function LoginPage() {
         dispatch(authActions.login(values));
     };
 
-    if (validToken) {
-        console.log(2)
-        return (
-          <Redirect to={{ pathname: location.state?.from?.pathname || "/" }} />
-        );
-      }
+
+    
 
 
     return (

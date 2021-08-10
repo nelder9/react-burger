@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import update from 'immutability-helper';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './burgerConstructor.module.css';
 import Ingredients from '../ingredients/ingredients';
@@ -13,6 +14,7 @@ const URL = "https://norma.nomoreparties.space/api/orders";
 
 export default function BurgerConstructor() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { constructorItems } = useSelector(state => state.burger);
     const { modal } = useSelector(state => state.burger);
     const mainBun = constructorItems.find((item) => item.type === "bun");
@@ -23,7 +25,12 @@ export default function BurgerConstructor() {
     if (mainBun) startPrice = mainBun.price;
     const price = constructorItems.reduce((accumulator, currentValue) => accumulator + currentValue.price, startPrice)
 
+    const { isAuthorized } = useSelector((store) => store.auth);
+
     const onOpen = async () => {
+        if (!isAuthorized) {
+            history.push("/login");
+          }
         try {
             if (!mainBun) {
                 return null;

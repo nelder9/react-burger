@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import {
     Button,
     EmailInput,
     Input,
     PasswordInput,
+    Tab
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { removeEmptyParams } from "../../services/utils";
-//import { ProfileTabs } from "../../components/profile-tabs/profile-tabs";
-//import { getUser } from "../../services/profile";
 
 import { profileActions } from "../../services/actions/profile";
+import { authActions } from "../../services/actions/auth";
 
 import styles from "./profile.module.css";
 import { useHistory } from "react-router-dom";
@@ -31,6 +32,10 @@ export default function ProfilePage() {
     const [values, setValues] = useState(initialValues);
     const [inputErrors, setInputErrors] = useState(initialInputErrors);
     const { user } = useSelector((store) => store.profile);
+
+
+    const [current, setCurrent] = useState("/profile");
+    const { refreshToken } = useSelector((store) => store.auth);
 
     useEffect(() => {
         dispatch(profileActions.getUser());
@@ -59,19 +64,44 @@ export default function ProfilePage() {
 
     const handleSubmit = () => {
         dispatch(profileActions.updateUser(removeEmptyParams(values)));
+        setValues((prevValues) => ({
+            ...prevValues,
+            password: "",
+          }));
     };
 
-    const handleReset = () => {
-        setValues({
-            ...user,
-            password: "",
-        });
-    };
+    const tabs = [
+        { title: "Профиль", path: "/profile" },
+        { title: "История заказов", path: "/profile/orders" },
+        { title: "Выход", path: "/logout" },
+      ];
+
+      const onTabClick = (tab) => {
+        if (tab.path === "/logout") {
+          dispatch(authActions.logout(refreshToken));
+          <Redirect to={{ pathname: "/login" }} />
+          return;
+        }
+    
+        setCurrent(tab.path);
+        history.push(tab.path);
+      };
 
     return (
-        <div className={styles.profile}>
+        <div className={styles.container}>
 
-
+        <div className={styles.tabs}>
+            {tabs.map((tab) => (
+                <Tab
+                key={tab.path}
+                value={tab.path}
+                active={current === tab.path}
+                onClick={() => onTabClick(tab)}
+                >
+                {tab.title}
+                </Tab>
+            ))}
+            </div>
             <div className={styles.form}>
                 <Input
                     type={"text"}
@@ -97,12 +127,9 @@ export default function ProfilePage() {
                         type="primary"
                         size="medium"
                         style={{ marginRight: "16px" }}
-                    onClick={handleSubmit}
+                        onClick={handleSubmit}
                     >
                         Сохранить
-                    </Button>
-                    <Button type="primary" size="medium" onClick={handleReset}>
-                        Отмена
                     </Button>
                 </div>
             </div>

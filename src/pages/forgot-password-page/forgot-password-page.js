@@ -12,7 +12,8 @@ export default function ForgotPasswordPage() {
     const dispatch = useDispatch();
     const history = useHistory();
     const [values, setValues] = useState({ email: "" });
-    const { validToken, emailReset, error } = useSelector((store) => store.auth);
+    const { emailReset, error } = useSelector((store) => store.auth);
+    const refreshToken = localStorage.getItem("refreshToken");
 
 
     useEffect(() => {
@@ -33,9 +34,9 @@ export default function ForgotPasswordPage() {
     const errorDiv = `${styles.error} mt-6 mb-4`;
 
 
-    if (validToken) {
+    if (refreshToken) {
         return <Redirect to={{ pathname: "/" }} />;
-    }
+      }
 
 
     return (

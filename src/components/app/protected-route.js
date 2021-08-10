@@ -5,29 +5,26 @@ import { authActions } from "../../services/actions/auth";
 
 export const ProtectedRoute = ({ children, ...rest }) => {
     const dispatch = useDispatch();
-    const hasToken = localStorage.getItem("refreshToken");
-    const { validToken } = useSelector((store) => store.auth);
-
+    const { isAuthorized } = useSelector((store) => store.auth);
+  
     useEffect(() => {
-        if (hasToken) {
-            console.log(hasToken)
-            dispatch(authActions.updateToken(hasToken));
-        } else {
-            console.log(3)
-            dispatch(authActions.setTokenInvalid());
-        }
-    }, [dispatch]);
-
+      const refreshToken = localStorage.getItem("refreshToken");
+  
+      if (!isAuthorized && refreshToken) {
+        dispatch(authActions.updateToken(refreshToken));
+      }
+    }, [dispatch, isAuthorized]);
+  console.log(isAuthorized, 'профиль')
     return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                hasToken && validToken ? (
-                    children
-                ) : (
-                    <Redirect to={{ pathname: "/login", state: { from: location } }} />
-                )
-            }
-        />
+      <Route
+        {...rest}
+        render={({ location }) =>
+          isAuthorized ? (
+            children
+          ) : (
+            <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          )
+        }
+      />
     );
-};
+  };

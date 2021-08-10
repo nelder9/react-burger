@@ -8,6 +8,7 @@ import {
     LOGOUT_FAILURE,
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
+    SET_AUTHORIZATION,
     REGISTER_FAILURE,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
@@ -15,7 +16,6 @@ import {
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     SET_EMAIL_RESET,
-    SET_TOKEN_INVALID,
     UPDATE_TOKEN_FAILURE,
     UPDATE_TOKEN_REQUEST,
     UPDATE_TOKEN_SUCCESS,
@@ -26,19 +26,13 @@ const initialState = {
     user: null,
     accessToken: null,
     refreshToken: null,
-    validToken: false,
+    isAuthorized: false,
     emailReset: false,
     error: null,
   };
   
   export const authReducer = (state = initialState, action) => {
     switch (action.type) {
-      case SET_TOKEN_INVALID: {
-        return {
-          ...state,
-          validToken: false,
-        };
-      }
       case SET_EMAIL_RESET: {
         return {
           ...state,
@@ -55,7 +49,7 @@ const initialState = {
       case LOGIN_SUCCESS: {
         return {
           ...state,
-          validToken: true,
+          isAuthorized: true,
           user: action.data.user,
           accessToken: action.data.accessToken,
           refreshToken: action.data.refreshToken,
@@ -64,7 +58,7 @@ const initialState = {
       case LOGIN_FAILURE: {
         return {
           ...state,
-          validToken: false,
+          isAuthorized: false,
           error: action.error.toString(),
         };
       }
@@ -78,12 +72,23 @@ const initialState = {
         return {
           ...state,
           user: null,
+          isAuthorized: false,
+          accessToken: null,
+          refreshToken: null,
         };
       }
       case LOGOUT_FAILURE: {
         return {
           ...state,
           error: action.error.toString(),
+        };
+      }
+      case SET_AUTHORIZATION: {
+        return {
+          ...state,
+          isAuthorized: true,
+          accessToken: action.accessToken,
+          refreshToken: action.refreshToken,
         };
       }
       case UPDATE_TOKEN_REQUEST: {
@@ -97,14 +102,14 @@ const initialState = {
           ...state,
           accessToken: action.data.accessToken,
           refreshToken: action.data.refreshToken,
-          validToken: true,
+          isAuthorized: true,
           error: null,
         };
       }
       case UPDATE_TOKEN_FAILURE: {
         return {
           ...state,
-          validToken: false,
+          isAuthorized: false,
           error: action.error.toString(),
         };
       }

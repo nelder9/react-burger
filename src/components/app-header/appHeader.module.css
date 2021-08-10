@@ -14,3 +14,7 @@
     height: 88px;
     margin: 0 auto;
 }
+
+.active {
+    color: #FFF;
+  }

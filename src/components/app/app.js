@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, BrowserRouter as Router, useLocation, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, useLocation } from "react-router-dom";
 
+
+import { getItems } from "../../services/actions/items";
 import { ProtectedRoute } from "./protected-route";
+import { authActions } from "../../services/actions/auth";
 import AppHeader from '../app-header/app-header';
 import LoginPage from '../../pages/login-page/login-page';
 import HomePage from '../../pages/home-page/home-page';
@@ -9,21 +13,36 @@ import RegisterPage from '../../pages/register-page/register-page';
 import ForgotPasswordPage from '../../pages/forgot-password-page/forgot-password-page';
 import ResetPasswordPage from '../../pages/reset-password-page/reset-password-page';
 import ProfilePage from '../../pages/profile-page/profile';
+import Ingredient from '../../pages/ingredient-page/ingredient';
+import notFoundPage from '../../pages/not-found-page/not-found-page';
 
 import { getCookie } from '../../services/utils';
-import { useDispatch } from 'react-redux';
 
 export default function App() {
-  //const dispatch = useDispatch();
-  //const location = useLocation();
-  const history = useHistory();
-  
+  const dispatch = useDispatch();
+  const { isAuthorized } = useSelector((store) => store.auth);
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const accessToken = getCookie("token");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (!isAuthorized && refreshToken) {
+      dispatch(authActions.setAuthorization({ accessToken, refreshToken }));
+    }
+  }, [dispatch, isAuthorized]);
+
+  const location = useLocation();
+  const modal = location.state && location.state.modal;
+  console.log(location.state, 123)
 
   return (
     <>
       <AppHeader />
-      <Router>
-        <Switch>
+        <Switch location={modal || location}>
           <Route path="/" exact={true}>
             <HomePage />
           </Route>
@@ -39,11 +58,17 @@ export default function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPasswordPage />
           </Route>
+          <Route path={`/ingredients/:ingredientId`}>
+            <Ingredient />
+          </Route>
           <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
           </ProtectedRoute>
+          <Route path="*">
+            <notFoundPage />
+          </Route>
         </Switch>
-      </Router>
+      
     </>
   );
 }

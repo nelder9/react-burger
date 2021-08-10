@@ -2,18 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { useHistory, useLocation } from "react-router-dom";
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './supplies.module.css';
 import { OPEN_MODAL } from '../../services/actions/index';
 
 export default function Supplies({ ingr }) {
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const onOpen = () => {
     dispatch({
       type: OPEN_MODAL,
       item: ingr,
       modal: 'card'
+    });
+    history.push({
+      pathname: `/ingredients/${ingr._id}`,
+      state: { modal: location },
     });
   };
 

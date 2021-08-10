@@ -5,11 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useHistory, useLocation } from "react-router-dom";
 import styles from './modal.module.css';
 import { CLOSE_MODAL, RESTORE_CONSTRUCTOR } from '../../services/actions/index';
 
 export default function Modal ({ children, title }) {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
     const { isModalOpen } = useSelector(state => state.burger);
     const { modal } = useSelector(state => state.burger);
     const onClose = () => {
@@ -21,6 +24,10 @@ export default function Modal ({ children, title }) {
                 type: RESTORE_CONSTRUCTOR
               });
         }
+        history.push({
+            pathname: `/`,
+            state: { modal: location },
+          });
       };
 
     const keyDownHandler = (e) => {
