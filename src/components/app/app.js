@@ -14,7 +14,8 @@ import ForgotPasswordPage from '../../pages/forgot-password-page/forgot-password
 import ResetPasswordPage from '../../pages/reset-password-page/reset-password-page';
 import ProfilePage from '../../pages/profile-page/profile';
 import Ingredient from '../../pages/ingredient-page/ingredient';
-import notFoundPage from '../../pages/not-found-page/not-found-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import ProfileOrdersPage from '../../pages/profile-orders-page/profile-orders-page';
 
 import { getCookie } from '../../services/utils';
 
@@ -37,7 +38,6 @@ export default function App() {
 
   const location = useLocation();
   const modal = location.state && location.state.modal;
-  console.log(location.state, 123)
 
   return (
     <>
@@ -64,8 +64,11 @@ export default function App() {
           <ProtectedRoute path="/profile" exact={true}>
             <ProfilePage />
           </ProtectedRoute>
+          <ProtectedRoute path="/profile/orders" exact={true}>
+            <ProfileOrdersPage />
+          </ProtectedRoute>
           <Route path="*">
-            <notFoundPage />
+            <NotFoundPage />
           </Route>
         </Switch>
       

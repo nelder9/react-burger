@@ -21,7 +21,6 @@ export default function LoginPage() {
     const { isAuthorized, error } = useSelector((store) => store.auth);
 
     if (isAuthorized) {
-        console.log(isAuthorized, 7)
         return (
         <Redirect to={{ pathname: location.state?.from?.pathname || "/" }} />
         );

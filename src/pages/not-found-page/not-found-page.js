@@ -1,13 +1,10 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 
-export const NoMatch = () => {
-  const location = useLocation();
+export default function NotFoundPage() {
 
   return (
-    
-      <h1>
-        Page not found for {location.pathname}
-      </h1>
+    <h1>
+      Page not found
+    </h1>
   );
 };

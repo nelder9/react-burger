@@ -14,7 +14,6 @@ export const ProtectedRoute = ({ children, ...rest }) => {
         dispatch(authActions.updateToken(refreshToken));
       }
     }, [dispatch, isAuthorized]);
-  console.log(isAuthorized, 'профиль')
     return (
       <Route
         {...rest}

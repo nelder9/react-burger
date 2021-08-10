@@ -9,6 +9,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 export default function BurgerIngredients() {
     const dispatch = useDispatch();
+    const { modalItem } = useSelector(state => state.burger);
     const { modal } = useSelector(state => state.burger);
     useEffect(() => {
         dispatch(getItems());
@@ -79,7 +80,7 @@ export default function BurgerIngredients() {
                 </p>
                 {mains.map((it) => <Supplies ingr={it} key={it._id} />)}
             </div>
-            {modal === 'card' ? <Modal title={'Детали ингредиента'}><IngredientDetails /></Modal> : '' } 
+            {modal === 'card' ? <Modal title={'Детали ингредиента'}><IngredientDetails ingredient={modalItem}/></Modal> : '' } 
             
         </div>
     );

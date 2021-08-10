@@ -151,7 +151,6 @@ const forgotPassword = async (email) => {
 };
 
 const resetPassword = async (form) => {
-    console.log(JSON.stringify(form), 7)
     const response = await fetch(
         "https://norma.nomoreparties.space/api/password-reset/reset",
         {
@@ -168,7 +167,6 @@ const resetPassword = async (form) => {
     );
 
     const data = await response.json();
-    console.log(data, 6)
     if (data.success) {
         return data;
     } else {

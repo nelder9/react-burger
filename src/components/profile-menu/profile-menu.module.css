@@ -1,0 +1,16 @@
+.tabs {
+    display: flex;
+    flex-direction: column;
+    margin-right: calc(var(--offset-base-size) * 30);
+    width: 320px;
+}
+
+.tabs>div {
+    padding-left: 0;
+    text-align: left;
+}
+
+.tabs>div>span {
+    font-size: 24px;
+    line-height: 30px;
+}
