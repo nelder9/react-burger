@@ -5,8 +5,6 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { authActions } from "../../services/actions/auth";
 import styles from "./profile-menu.module.css";
 
-import { Redirect } from "react-router-dom";
-
 const tabs = [
   { title: "Профиль", path: "/profile" },
   { title: "История заказов", path: "/profile/orders" },
@@ -27,7 +25,7 @@ export default function ProfileMenu() {
   const onTabClick = (tab) => {
     if (tab.path === "/logout") {
       dispatch(authActions.logout(refreshToken));
-      <Redirect to={{ pathname: "/login" }} />
+      history.push("/")
       return;
     }
 

@@ -1,8 +1,8 @@
 import { getCookie } from "./utils";
-
+const URL = "https://norma.nomoreparties.space/api/auth/user"
 const getUser = async () => {
   const response = await fetch(
-    "https://norma.nomoreparties.space/api/auth/user",
+    URL,
     {
       method: "GET",
       mode: "cors",
@@ -28,7 +28,7 @@ const getUser = async () => {
 
 const updateUser = async (form) => {
   const response = await fetch(
-    "https://norma.nomoreparties.space/api/auth/user",
+    URL,
     {
       method: "PATCH",
       mode: "cors",

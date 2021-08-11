@@ -62,6 +62,13 @@ export default function ProfilePage() {
         }));
     };
 
+    const handleReset = () => {
+        setValues({
+            ...user,
+            password: "",
+        });
+    };
+
     return (
         <div className={styles.container}>
             <ProfileMenu />
@@ -86,6 +93,9 @@ export default function ProfilePage() {
                 />
                 <div className="mb-6" />
                 <div style={{ display: "flex", flexDirection: "row" }}>
+                    <Button type="secondary" size="large" onClick={handleReset}>
+                        Отмена
+                    </Button>
                     <Button
                         type="primary"
                         size="medium"

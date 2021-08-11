@@ -4,7 +4,6 @@ import { Link, Redirect } from "react-router-dom";
 import { validateFields } from "../../services/validate/validate";
 import {
     Button,
-    EmailInput,
     Input,
     PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -79,7 +78,11 @@ export default function RegisterPage() {
                 errorText={"Имя обязательное поле"}
             />
             <div className="mb-4" />
-            <EmailInput onChange={onChange} value={values.email} name={"email"} />
+            <Input
+                onChange={onChange}
+                value={values.email}
+                placeholder="E-mail"
+                type="email" /> />
             <div className="mb-4" />
             <PasswordInput
                 onChange={onChange}

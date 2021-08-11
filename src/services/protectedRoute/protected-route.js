@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import { authActions } from "../../services/actions/auth";
+import { authActions } from "../actions/auth";
 
 export const ProtectedRoute = ({ children, ...rest }) => {
     const dispatch = useDispatch();

@@ -1,8 +1,9 @@
 import { deleteCookie, setCookie } from './utils';
+const URL = "https://norma.nomoreparties.space/api"
 
 const login = async (form) => {
     const response = await fetch(
-        "https://norma.nomoreparties.space/api/auth/login",
+        `${URL}/auth/login`,
         {
             method: "POST",
             mode: "cors",
@@ -34,7 +35,7 @@ const login = async (form) => {
 
 const logout = async (token) => {
     const response = await fetch(
-        "https://norma.nomoreparties.space/api/auth/logout",
+        `${URL}/auth/logout`,
         {
             method: "POST",
             mode: "cors",
@@ -61,7 +62,7 @@ const logout = async (token) => {
 
 const updateToken = async (token) => {
     const response = await fetch(
-        "https://norma.nomoreparties.space/api/auth/token",
+        `${URL}/auth/token`,
         {
             method: "POST",
             mode: "cors",
@@ -93,7 +94,7 @@ const updateToken = async (token) => {
 
 const register = async (form) => {
     const response = await fetch(
-        "https://norma.nomoreparties.space/api/auth/register",
+        `${URL}/auth/register`,
         {
             method: "POST",
             cache: "no-cache",
@@ -124,7 +125,7 @@ const register = async (form) => {
 
 const forgotPassword = async (email) => {
     const response = await fetch(
-        "https://norma.nomoreparties.space/api/password-reset",
+        `${URL}/password-reset`,
         {
             method: "POST",
             mode: "cors",
@@ -152,7 +153,7 @@ const forgotPassword = async (email) => {
 
 const resetPassword = async (form) => {
     const response = await fetch(
-        "https://norma.nomoreparties.space/api/password-reset/reset",
+        `${URL}/password-reset/reset`,
         {
             method: "POST",
             cache: "no-cache",

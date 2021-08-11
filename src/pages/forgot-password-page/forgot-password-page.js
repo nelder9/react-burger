@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import {
     Button,
-    EmailInput,
+    Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forgotPasswordPage.module.css";
 import { authActions } from "../../services/actions/auth"
@@ -36,14 +36,18 @@ export default function ForgotPasswordPage() {
 
     if (refreshToken) {
         return <Redirect to={{ pathname: "/" }} />;
-      }
+    }
 
 
     return (
         <div className={styles.forgotPassword}>
             <div className="text text_type_main-medium">Восстановление пароля</div>
             <div className="mb-4" />
-            <EmailInput onChange={onChange} value={values.email} name={"email"} />
+            <Input
+                onChange={onChange}
+                value={values.email}
+                placeholder="E-mail"
+                type="email" />
             <div className="mb-6" />
             <Button type="primary" size="medium" onClick={handleSubmit}>
                 Восстановить

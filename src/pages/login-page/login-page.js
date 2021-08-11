@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import {
     Button,
-    EmailInput,
+    Input,
     PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { authActions } from "../../services/actions/auth";
@@ -22,42 +22,37 @@ export default function LoginPage() {
 
     if (isAuthorized) {
         return (
-        <Redirect to={{ pathname: location.state?.from?.pathname || "/" }} />
+            <Redirect to={{ pathname: location.state?.from?.pathname || "/" }} />
         );
     }
 
-
     const onChange = ({ target }) => {
+        console.log(target)
         const { name, value } = target;
-
         setValues({
             ...values,
             [name]: value,
         });
     };
 
-
-
     const flexRow = `${styles.flexRow} text text_type_main-default text_color_inactive`;
     const errorDiv = `${styles.error} mt-6 mb-8`;
-
 
     const handleLogin = () => {
         dispatch(authActions.login(values));
     };
 
-
-    
-
-
     return (
         <div className={styles.login}>
             <div className="text text_type_main-medium">Вход</div>
             <div className="mb-4" />
-            <EmailInput
+            <Input
                 onChange={onChange}
                 value={values.email}
-                name={"email"} />
+                name={"email"}
+                placeholder="E-mail"
+                type="email"
+            />
             <div className="mb-4" />
             <PasswordInput
                 onChange={onChange}
@@ -72,7 +67,6 @@ export default function LoginPage() {
             {!error && <div className="mb-20" />}
             <div className={flexRow}>
                 <div className="mr-1">Вы - новый пользователь?</div>
-
                 <div>
                     <Link to="/register" className={styles.link}>
                         Зарегистрироваться
@@ -82,7 +76,6 @@ export default function LoginPage() {
             <div className="mb-4" />
             <div className={flexRow}>
                 <div className="mr-1">Забыли пароль?</div>
-
                 <div>
                     <Link to="/forgot-password" className={styles.link}>
                         Восстановить пароль

@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 
-
 import { getItems } from "../../services/actions/items";
-import { ProtectedRoute } from "./protected-route";
+import { ProtectedRoute } from "../../services/protectedRoute/protected-route";
 import { authActions } from "../../services/actions/auth";
 import AppHeader from '../app-header/app-header';
 import LoginPage from '../../pages/login-page/login-page';
