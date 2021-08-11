@@ -82,7 +82,7 @@ export default function RegisterPage() {
                 onChange={onChange}
                 value={values.email}
                 placeholder="E-mail"
-                type="email" /> />
+                type="email" />
             <div className="mb-4" />
             <PasswordInput
                 onChange={onChange}

@@ -13,22 +13,24 @@ export default function AppHeader() {
         <header className={styles.header}>
             <div className={styles.container}>
                 <div style={{ display: 'flex' }}>
-                    <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
+
                     <NavLink
                         to={'/'}
-                        className="text text_type_main-default ml-2 text_color_inactive"
+                        className={`${styles.navigation} text text_type_main-default ml-2 text_color_inactive`}
                         activeClassName={isConstructor ? styles.active : null}
                     >
-                        Конструктор
+                        <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
+                        <p>Конструктор</p>
                     </NavLink>
                 </div>
                 <div style={{ display: 'flex', flexGrow: 2, justifyContent: 'center' }}>
-                    <ListIcon type={isOrders ? 'primary' : 'secondary'} />
+
                     <NavLink
                         to={'/profile/orders'}
-                        className="text text_type_main-default ml-2 text_color_inactive"
+                        className={`${styles.navigation} text text_type_main-default ml-2 text_color_inactive`}
                         activeClassName={isOrders ? styles.active : null}>
-                        Лента заказов
+                        <ListIcon type={isOrders ? 'primary' : 'secondary'} />
+                        <p>Лента заказов</p>
                     </NavLink>
                 </div>
                 <div style={{ display: 'flex', flexGrow: 3 }}>
@@ -37,13 +39,14 @@ export default function AppHeader() {
                     </NavLink>
                 </div>
                 <div style={{ display: 'flex' }}>
-                    <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
+
                     <NavLink
                         to={'/profile'}
-                        className="text text_type_main-default ml-2 text_color_inactive"
+                        className={`${styles.navigation} text text_type_main-default ml-2 text_color_inactive`}
                         activeClassName={isProfile ? styles.active : null}
                     >
-                        Личный кабинет
+                        <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
+                        <p>Личный кабинет</p>
                     </NavLink>
                 </div>
             </div>

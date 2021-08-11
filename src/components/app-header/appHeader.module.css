@@ -17,4 +17,14 @@
 
 .active {
     color: #FFF;
-  }
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.navigation > p {
+    margin-left: 5px;
+}
