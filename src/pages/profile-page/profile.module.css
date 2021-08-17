@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    width: 1244px;
+    margin: 120px auto 0
+}
+
+.form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    margin-right: 60px;
+    width: 320px;
+  }
+  
+  .tabs > div {
+    padding-left: 0;
+    text-align: left;
+  }
+  
+  .tabs > div > span {
+    font-size: 24px;
+    line-height: 30px;
+  }
